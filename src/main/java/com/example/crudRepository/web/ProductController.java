@@ -37,6 +37,7 @@ public class ProductController {
 		return new ResponseEntity<String>("update product - " + id, null, 200);
 	}
 
+	//delete by id
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> deleteProductById(@PathParam(value = "product id") String id) {
 		return new ResponseEntity<String>("delete product - " + id, null, 200);
