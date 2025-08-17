@@ -1,13 +1,11 @@
 package com.example.crudRepository.service.impl;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.crudRepository.CustomException.ResourceNotFoundException;
-//import com.example.crudRepository.CustomException.ResourceNotFoundException;
 import com.example.crudRepository.model.Product;
 import com.example.crudRepository.model.dto.ProductResponse;
 import com.example.crudRepository.repository.ProductRepository;
