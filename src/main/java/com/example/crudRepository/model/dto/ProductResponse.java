@@ -1,19 +1,13 @@
-package com.example.crudRepository.model;
+package com.example.crudRepository.model.dto;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import com.example.crudRepository.model.Product;
 
-import lombok.Getter;
-import lombok.Setter;
+public class ProductResponse {
 
-@Document
-public class Product{
-
-	@Id
 	private String id;
 
 	private String name;
-	
+
 	private String description;
 
 	public String getId() {
@@ -23,7 +17,7 @@ public class Product{
 	public void setId(String id) {
 		this.id = id;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
@@ -38,5 +32,11 @@ public class Product{
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	
+	public ProductResponse(Product product) {
+		this.id = product.getId();
+		this.name = product.getName();
+		this.description = product.getDescription();
 	}
 }

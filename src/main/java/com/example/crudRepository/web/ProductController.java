@@ -9,23 +9,25 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.crudRepository.model.Product;
-import com.example.crudRepository.service.ProductService;
+import com.example.crudRepository.model.dto.ProductDTO;
+import com.example.crudRepository.model.dto.ProductResponse;
+import com.example.crudRepository.service.impl.ProductServiceImpl;
 
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import jakarta.websocket.server.PathParam;
 
 @RestController
 @RequestMapping("/products")
 public class ProductController {
 
-	private final ProductService productService;
+	private final ProductServiceImpl productService;
 
 	@Autowired
-	public ProductController(ProductService productService) {
+	public ProductController(ProductServiceImpl productService) {
 		this.productService = productService;
 	}
 	
@@ -44,9 +46,11 @@ public class ProductController {
 
 	//create
 	@PostMapping("")
-	public ResponseEntity<Product> createProduct(@RequestBody Product  product) {
-		Product savedProduct = productService.saveProduct(product);
-		return new ResponseEntity<>(savedProduct, null, HttpStatus.CREATED);
+	public ResponseEntity<ProductResponse> createProduct(@RequestBody ProductDTO productDto) {
+		Product product = ProductDTO.productDTOtoProduct(productDto);
+		ProductResponse productResponse = productService.saveProduct(product);
+		
+		return new ResponseEntity<>(productResponse, null, HttpStatus.CREATED);
 	}
 
 	//update by id
@@ -58,7 +62,7 @@ public class ProductController {
 
 	//delete by id
 	@DeleteMapping("/{id}")
-	public ResponseEntity<String> deleteProductById(@PathParam(value = "product id") String id) {
+	public ResponseEntity<String> deleteProductById(@PathParam	(value = "product id") String id) {
 		productService.deleteProduct(id);
 		return new ResponseEntity<>("Product deleted successfully", null, HttpStatus.NO_CONTENT);
 	}
