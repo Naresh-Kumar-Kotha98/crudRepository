@@ -1,0 +1,7 @@
+{
+	"createProduct":{
+		"id":"123",
+		"name":"product123",
+		"description":"prod123 desc"
+	}
+}

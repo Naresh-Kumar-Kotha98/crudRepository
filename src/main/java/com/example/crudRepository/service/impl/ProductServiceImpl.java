@@ -7,6 +7,8 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.example.crudRepository.CustomException.ResourceNotFoundException;
@@ -55,6 +57,13 @@ public class ProductServiceImpl implements ProductService{
 	public List<Product> getProducts() {
 		System.out.println("searching in db for all products.");
 		List<Product> products = productRepository.findAll();
+		return products;
+	}
+	
+//	@Cacheable(cacheNames = "cachedProductsByPage")
+	public Page<Product> getProductsByPageSize(Pageable pageable) {
+		System.out.println("searching in db for all products by pagenumber.");
+		Page<Product> products = productRepository.findAll(pageable);
 		return products;
 	}
 
