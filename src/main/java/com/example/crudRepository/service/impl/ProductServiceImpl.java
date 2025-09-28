@@ -16,7 +16,6 @@ import com.example.crudRepository.model.Product;
 import com.example.crudRepository.model.dto.ProductResponse;
 import com.example.crudRepository.repository.ProductRepository;
 import com.example.crudRepository.service.ProductService;
-import com.example.util.SingleTonCls;
 
 @Service
 public class ProductServiceImpl implements ProductService{
@@ -33,10 +32,6 @@ public class ProductServiceImpl implements ProductService{
 	})
 	public ProductResponse saveProduct(Product product) {
 		System.out.println("create product");
-		SingleTonCls sIngleTonCls = SingleTonCls.getInstance();
-		SingleTonCls sIngleTonCls2 = SingleTonCls.getInstance();
-		sIngleTonCls.staticMethDisplay();
-		sIngleTonCls.normalMethDisplay();
 		Product savedProduct = productRepository.save(product);
 		ProductResponse productResponse = new ProductResponse(savedProduct);
 		return productResponse;
