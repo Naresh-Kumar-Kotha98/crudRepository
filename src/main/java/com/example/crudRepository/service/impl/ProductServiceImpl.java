@@ -64,6 +64,16 @@ public class ProductServiceImpl implements ProductService {
     Product product = productRepository.findById(id)
         .orElseThrow(() -> new ResourceNotFoundException("No product found with id:" + id));
 
+    // To test builder design pattern
+
+//    com.example.crudRepository.model.dto.ProductBuilder productt = new com.example.crudRepository.model.dto.ProductBuilder.Builder()
+//        .setName(product.getName()).setDescription(product.getDescription()).setPrice(null).build();
+
+//    com.example.crudRepository.model.dto.ProductBuilderLombok productt = com.example.crudRepository.model.dto.ProductBuilderLombok
+//        .builder().name(product.getName()).description(product.getDescription()).price(null).build();
+//
+//    System.out.println("productt" + productt.toString());
+
     return product;
   }
 
