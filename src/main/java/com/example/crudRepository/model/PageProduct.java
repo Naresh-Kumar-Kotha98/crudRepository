@@ -3,6 +3,9 @@ package com.example.crudRepository.model;
 import java.io.Serializable;
 import java.util.List;
 
+import lombok.Getter;
+import lombok.Setter;
+
 public class PageProduct implements Serializable{
 
 	/**
@@ -10,44 +13,20 @@ public class PageProduct implements Serializable{
 	 */
 	private static final long serialVersionUID = -5893728549835138802L;
 
+  @Getter
+  @Setter
 	private List<Product> products;
 	
+  @Getter
+  @Setter
 	private int page;
 	
+  @Getter
+  @Setter
 	private int size;
 	
+  @Getter
+  @Setter
 	private int totalCount;
-
-	public List<Product> getProduct() {
-		return products;
-	}
-
-	public void setProduct(List<Product> products) {
-		this.products = products;
-	}
-
-	public int getSize() {
-		return size;
-	}
-
-	public void setSize(int size) {
-		this.size = size;
-	}
-
-	public int getTotalCount() {
-		return totalCount;
-	}
-
-	public void setTotalCount(int totalCount) {
-		this.totalCount = totalCount;
-	}
-
-	public int getPage() {
-		return page;
-	}
-
-	public void setPage(int page) {
-		this.page = page;
-	}
 
 }

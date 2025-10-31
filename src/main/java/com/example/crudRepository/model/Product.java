@@ -1,9 +1,14 @@
 package com.example.crudRepository.model;
 
 import java.io.Serializable;
+import java.util.Map;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import lombok.Getter;
+import lombok.Setter;
 
 
 @Document
@@ -14,34 +19,30 @@ public class Product implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	private String id;
+  @Id
+  @Getter
+  @Setter
+  private String id;
 
-	private String name;
-	
-	private String description;
+  @Getter
+  @Setter
+  private String name;
 
-	public String getId() {
-		return id;
-	}
+  @Getter
+  @Setter
+  private String description;
 
-	public void setId(String id) {
-		this.id = id;
-	}
-	
-	public String getName() {
-		return name;
-	}
+  @Getter
+  @Setter
+  private int stock;
+  
+  @Getter
+  @Setter
+  private transient Map<String, String> properties;
+  
+  @Getter
+  @Setter
+  @Transient
+  private String propFromOtherMS;
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
 }

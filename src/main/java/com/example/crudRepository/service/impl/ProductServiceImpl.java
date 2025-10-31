@@ -1,6 +1,8 @@
 package com.example.crudRepository.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -10,6 +12,7 @@ import org.springframework.cache.annotation.Caching;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import com.example.crudRepository.CustomException.ResourceNotFoundException;
 import com.example.crudRepository.model.Product;
@@ -21,10 +24,13 @@ import com.example.crudRepository.service.ProductService;
 public class ProductServiceImpl implements ProductService {
 
   private final ProductRepository productRepository;
+  
+  private final RestTemplate restTemplate;
 
-  @Autowired
-  public ProductServiceImpl(ProductRepository productRepository) {
+//  @Autowired
+  public ProductServiceImpl(ProductRepository productRepository, RestTemplate restTemplate) {
     this.productRepository = productRepository;
+    this.restTemplate = restTemplate;
   }
 
   @Caching(evict = { @CacheEvict(cacheNames = "cachedProducts", allEntries = true) })
@@ -73,8 +79,20 @@ public class ProductServiceImpl implements ProductService {
 //        .builder().name(product.getName()).description(product.getDescription()).price(null).build();
 //
 //    System.out.println("productt" + productt.toString());
-
+    
+    
+    //to get data from mtfeatures(Multi_THreading project) project and to integrate with response
+    //url-"http://localhost:8616/mt/products"
+    
+    try {
+      String prop = restTemplate.getForObject("http://localhost:8616/mt/products", String.class);
+      product.setPropFromOtherMS(prop);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    
     return product;
+    
   }
 
   @Caching(evict = { @CacheEvict(cacheNames = "cachedProducts", allEntries = true),

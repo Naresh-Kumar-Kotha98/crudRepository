@@ -14,6 +14,7 @@ import org.apache.commons.io.FileUtils;
 import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.web.client.RestTemplate;
 
 import com.example.crudRepository.model.Product;
 import com.example.crudRepository.repository.ProductRepository;
@@ -22,6 +23,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 class ProductServiceImplTest {
 
   private ProductRepository productRepository;
+  private RestTemplate restTemplate;
   private ProductServiceImpl productServiceImpl;
   public static JSONObject productJson = null;
   protected static String dataPathProductJson = "src/test/resources/Product.json";
@@ -39,7 +41,8 @@ class ProductServiceImplTest {
   @BeforeEach
   private void setup() {
     productRepository = mock(ProductRepository.class);
-    productServiceImpl = new ProductServiceImpl(productRepository);
+    restTemplate = mock(RestTemplate.class);
+    productServiceImpl = new ProductServiceImpl(productRepository, restTemplate);
   }
 
   @Test
