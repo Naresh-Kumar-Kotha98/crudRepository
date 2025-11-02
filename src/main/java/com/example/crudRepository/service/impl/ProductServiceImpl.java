@@ -1,10 +1,10 @@
 package com.example.crudRepository.service.impl;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -20,12 +20,20 @@ import com.example.crudRepository.model.dto.ProductResponse;
 import com.example.crudRepository.repository.ProductRepository;
 import com.example.crudRepository.service.ProductService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class ProductServiceImpl implements ProductService {
 
   private final ProductRepository productRepository;
   
   private final RestTemplate restTemplate;
+  
+  private Logger logger = LoggerFactory.getLogger(ProductServiceImpl.class);
+  
+  @Value("${crudRepo.services.mtservice.url:http://localhost:8616/mt/products}")
+  private String mtMSUrl;  
 
 //  @Autowired
   public ProductServiceImpl(ProductRepository productRepository, RestTemplate restTemplate) {
@@ -38,6 +46,7 @@ public class ProductServiceImpl implements ProductService {
     System.out.println("create product");
     Product savedProduct = productRepository.save(product);
     ProductResponse productResponse = new ProductResponse(savedProduct);
+    log.warn("procyt createdwith id:" + product.getId());
     return productResponse;
   }
 
@@ -83,13 +92,16 @@ public class ProductServiceImpl implements ProductService {
     
     //to get data from mtfeatures(Multi_THreading project) project and to integrate with response
     //url-"http://localhost:8616/mt/products"
+    logger.warn("warninf get mtMSulr:" + mtMSUrl);
     
     try {
-      String prop = restTemplate.getForObject("http://localhost:8616/mt/products", String.class);
+      String prop = restTemplate.getForObject(mtMSUrl, String.class);
       product.setPropFromOtherMS(prop);
     } catch (Exception e) {
       e.printStackTrace();
     }
+    
+    logger.warn("warninf get product by id:" + product.getId());
     
     return product;
     
